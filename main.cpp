@@ -70,7 +70,7 @@ int main( int argc, char** argv )
     g2o::OptimizationAlgorithmLevenberg* algorithm = new g2o::OptimizationAlgorithmLevenberg( block_solver );
     
     optimizer.setAlgorithm( algorithm );
-    optimizer.setVerbose( false );
+    optimizer.setVerbose( false );// 关闭调试输出
     
     // 添加节点
     // 两个位姿节点
@@ -94,8 +94,8 @@ int main( int argc, char** argv )
         double z = 1;
         double x = ( pts1[i].x - cx ) * z / fx; 
         double y = ( pts1[i].y - cy ) * z / fy; 
-        v->setMarginalized(true);
-        v->setEstimate( Eigen::Vector3d(x,y,z) );
+        v->setMarginalized(true);//是否边缘化（以便稀疏化求解）
+        v->setEstimate( Eigen::Vector3d(x,y,z) );//初始值
         optimizer.addVertex( v );
     }
     
