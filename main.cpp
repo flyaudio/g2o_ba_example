@@ -80,8 +80,8 @@ int main( int argc, char** argv )
         v->setId(i);
         if ( i == 0)
             v->setFixed( true ); // 第一个点固定为零
-        // 预设值为单位Pose，因为我们不知道任何信息
-        v->setEstimate( g2o::SE3Quat() );
+        
+        v->setEstimate( g2o::SE3Quat() );// 初始值为单位Pose，因为我们不知道任何信息
         optimizer.addVertex( v );
     }
     // 很多个特征点的节点
