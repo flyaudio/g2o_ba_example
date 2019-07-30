@@ -81,7 +81,7 @@ int main( int argc, char** argv )
         if ( i == 0)
             v->setFixed( true ); // 第一个点固定为零
         
-        v->setEstimate( g2o::SE3Quat() );// 初始值为单位Pose，因为我们不知道任何信息
+        v->setEstimate( g2o::SE3Quat() );// 初始值为单位Pose，因为假设不知道任何信息
         optimizer.addVertex( v );
     }
     // 很多个特征点的节点
@@ -142,9 +142,9 @@ int main( int argc, char** argv )
     cout<<"优化完毕"<<endl;
     
     //我们比较关心两帧之间的变换矩阵
-    g2o::VertexSE3Expmap* v = dynamic_cast<g2o::VertexSE3Expmap*>( optimizer.vertex(1) );
-    Eigen::Isometry3d pose = v->estimate();
-    cout<<"Pose="<<endl<<pose.matrix()<<endl;
+    g2o::VertexSE3Expmap* v = dynamic_cast<g2o::VertexSE3Expmap*>( optimizer.vertex(1) );//用ID索引吗??
+    Eigen::Isometry3d pose = v->estimate();//这是优化后&更新后的值吗??
+    cout<<"Pose="<<endl<<pose.matrix()<<endl;//对于Isometry3d,  .matrix()才是变换矩阵，做运算时需加.matrix()后缀
     
     // 以及所有特征点的位置
     for ( size_t i=0; i<pts1.size(); i++ )
