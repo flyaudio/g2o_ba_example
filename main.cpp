@@ -106,14 +106,14 @@ int main( int argc, char** argv )
     
     // 准备边
     // 第一帧
-    vector<g2o::EdgeProjectXYZ2UV*> edges;
+    vector<g2o::EdgeProjectXYZ2UV*> edges;//二元边
     for ( size_t i=0; i<pts1.size(); i++ )
     {
         g2o::EdgeProjectXYZ2UV*  edge = new g2o::EdgeProjectXYZ2UV();
         edge->setVertex( 0, dynamic_cast<g2o::VertexSBAPointXYZ*>   (optimizer.vertex(i+2)) );
         edge->setVertex( 1, dynamic_cast<g2o::VertexSE3Expmap*>     (optimizer.vertex(0)) );
         edge->setMeasurement( Eigen::Vector2d(pts1[i].x, pts1[i].y ) );
-        edge->setInformation( Eigen::Matrix2d::Identity() );
+        edge->setInformation( Eigen::Matrix2d::Identity() );//设置信息矩阵，协方差
         edge->setParameterId(0, 0);
         // 核函数
         edge->setRobustKernel( new g2o::RobustKernelHuber() );
